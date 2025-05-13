@@ -1,25 +1,30 @@
 {% extends 'base.html' %}
-{% block title %}Sign Up{% endblock %}
+{% block title %}Email Tasdiqlash{% endblock %}
 
 {% block content %}
 <style>
-  .signup-box {
+  .verify-box {
     background: #fff;
     padding: 40px;
     border-radius: 15px;
-    box-shadow: 0 0 15px #00c0c766;
+    box-shadow: 0 0 15px #00c0c766, 0 0 25px #00e0cc55;
     width: 100%;
     max-width: 450px;
     margin: 60px auto;
+    transition: 0.3s ease;
   }
 
-  .signup-box h2 {
+  .verify-box:hover {
+    box-shadow: 0 0 20px #00c0c7, 0 0 35px #00ffcc88;
+  }
+
+  .verify-box h2 {
     text-align: center;
     margin-bottom: 25px;
     color: #00bfa5;
   }
 
-  .signup-box input {
+  .verify-box input {
     width: 100%;
     padding: 12px 15px;
     margin: 10px 0;
@@ -28,9 +33,15 @@
     background: #f1fdfc;
     color: #333;
     outline: none;
+    box-shadow: 0 0 5px #00bfa544;
+    transition: 0.3s ease;
   }
 
-  .signup-box button {
+  .verify-box input:hover {
+    box-shadow: 0 0 10px #00bfa5aa, 0 0 20px #00bfa5aa;
+  }
+
+  .verify-box button {
     width: 100%;
     padding: 12px;
     margin-top: 15px;
@@ -41,6 +52,13 @@
     font-weight: bold;
     font-size: 16px;
     cursor: pointer;
+    box-shadow: 0 0 10px #00bfa5;
+    transition: 0.3s ease;
+  }
+
+  .verify-box button:hover {
+    background: linear-gradient(to right, #1de9b6, #00bfa5);
+    box-shadow: 0 0 20px #00bfa5, 0 0 30px #00bfa5;
   }
 
   nav, .nav-links, .nav-toggle {
@@ -48,17 +66,12 @@
   }
 </style>
 
-<div class="signup-box">
-  <h2>Sign Up</h2>
+<div class="verify-box">
+  <h2>Email Tasdiqlash</h2>
   <form method="POST">
     {% csrf_token %}
-    <input type="text" name="first_name" placeholder="Ismingiz" required>
-    <input type="text" name="last_name" placeholder="Familiya" required>
-    <input type="text" name="phone_number" placeholder="Telefon raqam" required>
-    <input type="text" name="card_number" placeholder="Karta raqami" required>
-    <input type="email" name="email" placeholder="Email" required>
-    <input type="password" name="password" placeholder="Parol" required>
-    <button type="submit">Kodni Emailga Yuborish</button>
+    {{ form.as_p }}
+    <button type="submit">Tasdiqlash</button>
   </form>
 </div>
 {% endblock %}

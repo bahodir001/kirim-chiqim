@@ -11,6 +11,10 @@ from django.contrib import messages
 from .models import CustomUser, FamilyGroup
 from django.contrib.auth.decorators import login_required
 
+from .models import EmailVerification
+from .utils import generate_verification_code, send_verification_email
+from .forms import VerifyForm
+
 
 class RegisterView(APIView):
     def post(self, request):
@@ -40,17 +44,22 @@ class LogoutView(APIView):
 
 def signup_view(request):
     if request.method == 'POST':
-        data = request.POST
-        user = CustomUser.objects.create_user(
-            email=data['email'],
-            phone_number=data['phone_number'],
-            first_name=data['first_name'],
-            last_name=data['last_name'],
-            card_number=data['card_number'],
-            password=data['password'],
-        )
-        login(request, user)
-        return redirect('home')
+        email = request.POST['email']
+
+        existing = EmailVerification.objects.filter(email=email, is_verified=False).first()
+        code = generate_verification_code()
+
+        if existing:
+            existing.code = code
+            existing.save()
+        else:
+            EmailVerification.objects.create(email=email, code=code)
+
+        send_verification_email(email, code)
+
+        request.session['pending_email'] = email
+        return redirect('verify-email')
+
     return render(request, 'signup.html')
 
 
@@ -86,7 +95,7 @@ def profile_view(request):
 
         if request.POST.get('password'):
             user.set_password(request.POST['password'])
-            update_session_auth_hash(request, user)  
+            update_session_auth_hash(request, user)  # Logout bo‘lib qolmasligi uchun
 
         user.save()
         return redirect('profile')
@@ -106,3 +115,35 @@ def family_group_view(request):
 
     family_members = CustomUser.objects.filter(family_group=user.family_group) if user.family_group else []
     return render(request, 'family.html', {'user': user, 'members': family_members})
+
+
+def verify_email_view(request):
+    email = request.session.get('pending_email')
+
+    if request.method == 'POST':
+        form = VerifyForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            try:
+                record = EmailVerification.objects.get(email=email, code=cd['code'], is_verified=False)
+                record.is_verified = True
+                record.save()
+
+                user = CustomUser.objects.create_user(
+                    email=email,
+                    password=cd['password'],
+                    first_name=cd['first_name'],
+                    last_name=cd['last_name'],
+                    phone_number=cd['phone_number'],
+                    card_number=cd['card_number']
+                )
+
+                login(request, user)
+                return redirect('home')
+
+            except EmailVerification.DoesNotExist:
+                messages.error(request, "❌ Kod noto‘g‘ri yoki eskirgan!")
+    else:
+        form = VerifyForm()
+
+    return render(request, 'verify.html', {'form': form})
