@@ -24,7 +24,7 @@
 - **Autentifikatsiya**: Email login, custom user modeli
 - **Statistika**: Kunlik, oylik hisobotlar, grafiklar
 - **Admin Panel**: Maxsus styling va previewlar
-
+- **Login**: Email va password orqali
 ---
 
 ## 🔧 O‘rnatish
