@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% block title %}Asosiy Sahifa{% endblock %}
+
+{% block content %}
+<style>
+  .chart-section {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 40px;
+  }
+
+  .chart-card {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 204, 204, 0.2);
+    padding: 25px;
+    transition: 0.3s ease;
+  }
+
+  .chart-card:hover {
+    box-shadow: 0 6px 20px rgba(0, 204, 204, 0.3);
+  }
+
+  .chart-card h3 {
+    color: #00bfa5;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+
+  .dark .chart-card {
+    background: #1a1a1a;
+    box-shadow: 0 4px 15px rgba(0, 255, 255, 0.1);
+  }
+
+  .dark .chart-card h3 {
+    color: #00fff7;
+  }
+</style>
+
+<h2 style="text-align: center; margin-top: 20px;">Kirim/Chiqim Grafiklari</h2>
+
+<div class="chart-section">
+  <div class="chart-card">
+    <h3>Kirimlar</h3>
+    <canvas id="incomeChart" width="400" height="200"></canvas>
+  </div>
+
+  <div class="chart-card">
+    <h3>Chiqimlar</h3>
+    <canvas id="expenseChart" width="400" height="200"></canvas>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    fetch("/api/stats/charts/", {
+        headers: {
+            'Authorization': 'Token {{ request.user.auth_token.key }}'
+        }
+    })
+    .then(res => res.json())
+    .then(data => {
+        const incomeLabels = Object.keys(data.income);
+        const incomeValues = Object.values(data.income);
+
+        const expenseLabels = Object.keys(data.expense);
+        const expenseValues = Object.values(data.expense);
+
+        new Chart(document.getElementById('incomeChart'), {
+            type: 'bar',
+            data: {
+                labels: incomeLabels,
+                datasets: [{
+                    label: 'Kirimlar',
+                    data: incomeValues,
+                    backgroundColor: 'rgba(0, 204, 204, 0.6)',  // 🟦 Cyan
+                    borderColor: 'rgba(0, 204, 204, 1)',
+                    borderWidth: 1
+                }]
+            }
+        });
+
+        new Chart(document.getElementById('expenseChart'), {
+            type: 'bar',
+            data: {
+                labels: expenseLabels,
+                datasets: [{
+                    label: 'Chiqimlar',
+                    data: expenseValues,
+                    backgroundColor: 'rgba(255, 99, 132, 0.6)',  // 🔴 Red
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }]
+            }
+        });
+    });
+</script>
+{% endblock %}

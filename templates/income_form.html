@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Yangi Kirim{% endblock %}
+{% block content %}
+<h2>Yangi Kirim Qo‘shish</h2>
+<form method="POST">
+    {% csrf_token %}
+    <label>Kirim Turi</label>
+    <select name="income_type">
+        <option value="salary">Oylik</option>
+        <option value="advance">Avans</option>
+        <option value="business">Biznes</option>
+    </select>
+
+    <input type="text" name="amount" placeholder="Summasi">
+    <input type="date" name="date">
+    <input type="time" name="time">
+
+    <label>To‘lov Shakli</label>
+    <select name="method">
+        <option value="cash">Naqd</option>
+        <option value="card">Karta</option>
+        <option value="currency">Valyuta</option>
+    </select>
+
+    <button type="submit">Saqlash</button>
+</form>
+{% endblock %}

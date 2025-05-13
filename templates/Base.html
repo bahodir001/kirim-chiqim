@@ -1,0 +1,125 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Kirim-Chiqim{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        nav.navbar {
+            background: linear-gradient(to right, #00c0c7, #1de9b6);
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-bottom: 2px solid #00c0c755;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a,
+        .nav-links button {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 14px;
+            border-radius: 8px;
+            transition: 0.3s ease;
+            border: 1px solid transparent;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover,
+        .nav-links button:hover {
+            background: white;
+            color: #00bfa5;
+            border: 1px solid #00bfa5;
+            box-shadow: 0 0 10px #00bfa577;
+        }
+
+        .nav-toggle {
+            display: none;
+        }
+
+        .container {
+            padding: 30px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Dark mode qo‘llab-quvvatlashi */
+        .dark {
+            background: #121212;
+            color: #f0f0f0;
+        }
+
+        .dark nav.navbar {
+            background: #000;
+        }
+
+        .dark .nav-links a,
+        .dark .nav-links button {
+            color: white;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .dark .nav-links a:hover,
+        .dark .nav-links button:hover {
+            background: #333;
+            color: #00eaff;
+        }
+    </style>
+</head>
+<body id="body">
+    <nav class="navbar">
+        <div class="nav-toggle">☰</div>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/login/">Login</a>
+            <a href="/register/">Sign Up</a>
+            <a href="/logout/">Logout</a>
+            <a href="/incomes/">Kirim</a>
+            <a href="/expenses/">Chiqim</a>
+            <a href="/api/exports/pdf/">PDF</a>
+            <a href="/api/exports/excel/">Excel</a>
+            <button id="dark-toggle">🌙</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
+    <script>
+        const toggleBtn = document.getElementById('dark-toggle');
+        const body = document.getElementById('body');
+
+        // Dark mode tiklash
+        if (localStorage.getItem('dark-mode') === 'enabled') {
+            body.classList.add('dark');
+        }
+
+        // Dark mode tugma bosilganda
+        toggleBtn.addEventListener('click', () => {
+            body.classList.toggle('dark');
+            if (body.classList.contains('dark')) {
+                localStorage.setItem('dark-mode', 'enabled');
+            } else {
+                localStorage.setItem('dark-mode', 'disabled');
+            }
+        });
+    </script>
+</body>
+</html>

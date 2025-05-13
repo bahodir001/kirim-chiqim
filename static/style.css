@@ -1,0 +1,87 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0 20px;
+    background: white;
+    color: black;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+nav.navbar {
+    background: #222;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.nav-toggle {
+    color: #fff;
+    font-size: 22px;
+    cursor: pointer;
+    display: none;
+}
+
+.nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.nav-links a,
+.nav-links button {
+    color: #fff;
+    text-decoration: none;
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.container {
+    max-width: 700px;
+    margin: 20px auto;
+}
+
+/* 🌙 DARK MODE */
+.dark {
+    background-color: #121212;
+    color: #f0f0f0;
+}
+
+.dark nav {
+    background-color: #000;
+}
+
+.dark nav a,
+.dark nav button {
+    color: #fff;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .nav-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background: #111;
+        padding: 10px;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    form input, form select, form button {
+        font-size: 16px;
+    }
+
+    canvas {
+        max-width: 100%;
+    }
+}

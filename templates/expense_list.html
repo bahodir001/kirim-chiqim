@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block title %}Chiqimlar Ro‘yxati{% endblock %}
+
+{% block content %}
+<style>
+  .expense-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+  }
+
+  .expense-header h2 {
+    color: #e53935;
+    margin: 0;
+  }
+
+  .add-expense-btn {
+    background: linear-gradient(to right, #e53935, #ff6f61);
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(229, 57, 53, 0.3);
+    transition: 0.3s ease;
+  }
+
+  .add-expense-btn:hover {
+    background: #d32f2f;
+    box-shadow: 0 4px 15px rgba(229, 57, 53, 0.5);
+  }
+
+  .expense-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .expense-item {
+    background: #fff;
+    padding: 15px 20px;
+    margin-bottom: 12px;
+    border-left: 6px solid #e53935;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: 0.2s ease;
+  }
+
+  .expense-item:hover {
+    box-shadow: 0 4px 12px rgba(229, 57, 53, 0.15);
+  }
+
+  .expense-item span {
+    display: block;
+    font-weight: 500;
+    color: #333;
+  }
+
+  .dark .expense-item {
+    background: #1f1f1f;
+    border-left-color: #ff6f61;
+    color: #f0f0f0;
+  }
+
+  .dark .expense-item span {
+    color: #e0e0e0;
+  }
+
+  .dark .add-expense-btn {
+    background: #ff6f61;
+    color: white;
+  }
+</style>
+
+<div class="expense-header">
+  <h2>Chiqimlar Ro‘yxati</h2>
+  <a href="{% url 'expense-create' %}" class="add-expense-btn">+ Yangi Chiqim</a>
+</div>
+
+<ul class="expense-list">
+  {% for expense in expenses %}
+    <li class="expense-item">
+      <span><strong>Sana:</strong> {{ expense.date }}</span>
+      <span><strong>Turi:</strong> {{ expense.expense_type }}</span>
+      <span><strong>Summasi:</strong> {{ expense.amount }}</span>
+      <span><strong>Shakli:</strong> {{ expense.method }}</span>
+    </li>
+  {% empty %}
+    <li class="expense-item">📭 Chiqimlar hozircha yo‘q.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

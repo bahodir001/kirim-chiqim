@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% block title %}Ro‘yxatdan o‘tish{% endblock %}
+
+{% block content %}
+<style>
+  .signup-box {
+    background: #fff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px #00d4b3, 0 0 25px #00ffcc66;
+    width: 100%;
+    max-width: 450px;
+    margin: 60px auto;
+    transition: 0.3s ease;
+  }
+
+  .signup-box:hover {
+    box-shadow: 0 0 20px #00d4b3, 0 0 35px #00ffccaa;
+  }
+
+  .signup-box h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #00bfa5;
+  }
+
+  .signup-box input {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 10px 0;
+    border: 2px solid #00bfa5;
+    border-radius: 8px;
+    background: #e6fdfb;
+    color: #333;
+    outline: none;
+    box-shadow: 0 0 5px #00bfa555;
+    transition: 0.3s ease;
+  }
+
+  .signup-box input:hover {
+    box-shadow: 0 0 10px #00bfa5aa, 0 0 20px #00bfa5aa;
+  }
+
+  .signup-box button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    background: linear-gradient(to right, #00bfa5, #1de9b6);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 0 10px #00bfa5;
+    transition: 0.3s ease;
+  }
+
+  .signup-box button:hover {
+    background: linear-gradient(to right, #1de9b6, #00bfa5);
+    box-shadow: 0 0 20px #00bfa5, 0 0 30px #00bfa5;
+  }
+
+  .signup-box .login-link {
+    display: block;
+    margin-top: 15px;
+    text-align: center;
+    color: #00bfa5;
+    text-decoration: none;
+    font-size: 14px;
+  }
+
+  .signup-box .login-link:hover {
+    text-decoration: underline;
+  }
+
+  nav, .nav-links, .nav-toggle {
+    display: none !important;
+  }
+</style>
+
+<div class="signup-box">
+  <h2>Sign Up</h2>
+  <form method="POST">
+    {% csrf_token %}
+    <input type="text" name="first_name" placeholder="Ismingiz" required>
+    <input type="text" name="last_name" placeholder="Familiyangiz" required>
+    <input type="text" name="phone_number" placeholder="Telefon raqami" required>
+    <input type="text" name="card_number" placeholder="Karta raqami" required>
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="password" name="password" placeholder="Parol" required>
+    <button type="submit">Ro‘yxatdan o‘tish</button>
+  </form>
+  <a class="login-link" href="/login/">← Oldin ro‘yxatdan o‘tganmisiz?</a>
+</div>
+{% endblock %}

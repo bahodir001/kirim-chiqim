@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block title %}Kirimlar Ro‘yxati{% endblock %}
+
+{% block content %}
+<style>
+  .income-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+  }
+
+  .income-header h2 {
+    color: #00bfa5;
+    margin: 0;
+  }
+
+  .add-income-btn {
+    background: linear-gradient(to right, #00c0c7, #1de9b6);
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(0, 204, 204, 0.3);
+    transition: 0.3s ease;
+  }
+
+  .add-income-btn:hover {
+    background: #00bfa5;
+    box-shadow: 0 4px 15px rgba(0, 204, 204, 0.5);
+  }
+
+  .income-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .income-item {
+    background: #fff;
+    padding: 15px 20px;
+    margin-bottom: 12px;
+    border-left: 6px solid #00c0c7;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: 0.2s ease;
+  }
+
+  .income-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 204, 204, 0.1);
+  }
+
+  .income-item span {
+    display: block;
+    font-weight: 500;
+    color: #333;
+  }
+
+  .dark .income-item {
+    background: #1f1f1f;
+    border-left-color: #00fff7;
+    color: #f0f0f0;
+  }
+
+  .dark .income-item span {
+    color: #e0e0e0;
+  }
+
+  .dark .add-income-btn {
+    background: #00bfa5;
+    color: white;
+  }
+</style>
+
+<div class="income-header">
+  <h2>Kirimlar Ro‘yxati</h2>
+  <a href="{% url 'income-create' %}" class="add-income-btn">+ Yangi Kirim</a>
+</div>
+
+<ul class="income-list">
+  {% for income in incomes %}
+    <li class="income-item">
+      <span><strong>Sana:</strong> {{ income.date }}</span>
+      <span><strong>Turi:</strong> {{ income.income_type }}</span>
+      <span><strong>Summasi:</strong> {{ income.amount }}</span>
+      <span><strong>Shakli:</strong> {{ income.method }}</span>
+    </li>
+  {% empty %}
+    <li class="income-item">📭 Kirimlar hozircha yo‘q.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Yangi Chiqim{% endblock %}
+{% block content %}
+<h2>Yangi Chiqim Qo‘shish</h2>
+<form method="POST">
+    {% csrf_token %}
+    <label>Chiqim Turi</label>
+    <select name="expense_type">
+        <option value="transport">Yo‘l harajatlari</option>
+        <option value="taxes">Soliqlar</option>
+        <option value="health">Salomatlik</option>
+        <option value="entertainment">Ko‘ngilochar</option>
+        <option value="other">Boshqa</option>
+    </select>
+
+    <input type="text" name="amount" placeholder="Summasi">
+    <input type="date" name="date">
+    <input type="time" name="time">
+
+    <label>To‘lov Shakli</label>
+    <select name="method">
+        <option value="cash">Naqd</option>
+        <option value="card">Karta</option>
+        <option value="currency">Valyuta</option>
+    </select>
+
+    <button type="submit">Saqlash</button>
+</form>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Profilni tahrirlash{% endblock %}
+{% block content %}
+<h2>Profilni tahrirlash</h2>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label>Ism</label>
+    <input type="text" name="first_name" value="{{ user.first_name }}"><br>
+
+    <label>Familiya</label>
+    <input type="text" name="last_name" value="{{ user.last_name }}"><br>
+
+    <label>Telefon</label>
+    <input type="text" name="phone_number" value="{{ user.phone_number }}"><br>
+
+    <label>Karta raqami</label>
+    <input type="text" name="card_number" value="{{ user.card_number }}"><br>
+
+    <label>Yangi Parol (ixtiyoriy)</label>
+    <input type="password" name="password"><br>
+
+    <label>Profil rasmi (ixtiyoriy)</label>
+    {% if user.profile_photo %}
+        <img src="{{ user.profile_photo.url }}" alt="Profil rasmi" width="100"><br>
+    {% endif %}
+    <input type="file" name="profile_photo"><br>
+
+    <button type="submit">Saqlash</button>
+</form>
+{% endblock %}

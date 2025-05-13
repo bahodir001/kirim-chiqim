@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Family Mode{% endblock %}
+{% block content %}
+<h2>Family Guruh</h2>
+
+{% if user.family_group %}
+    <p>Guruh nomi: <strong>{{ user.family_group.name }}</strong></p>
+    <p>Roli: {{ user.role_in_family }}</p>
+    <h4>Guruh A'zolari:</h4>
+    <ul>
+        {% for member in members %}
+            <li>{{ member.first_name }} {{ member.last_name }} - {{ member.email }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <form method="POST">
+        {% csrf_token %}
+        <input type="text" name="group_name" placeholder="Yangi guruh nomi">
+        <button type="submit">Guruh yaratish</button>
+    </form>
+{% endif %}
+{% endblock %}
