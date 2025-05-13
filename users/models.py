@@ -40,7 +40,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     objects = CustomUserManager()
 
-    USERNAME_FIELD = 'email'  # 👈 MUHIM!
+    USERNAME_FIELD = 'email'  
     REQUIRED_FIELDS = ['phone_number', 'first_name', 'last_name', 'card_number']
 
     def __str__(self):
