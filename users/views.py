@@ -86,7 +86,7 @@ def profile_view(request):
 
         if request.POST.get('password'):
             user.set_password(request.POST['password'])
-            update_session_auth_hash(request, user)  # Logout bo‘lib qolmasligi uchun
+            update_session_auth_hash(request, user)  
 
         user.save()
         return redirect('profile')
